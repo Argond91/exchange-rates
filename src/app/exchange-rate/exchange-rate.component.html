@@ -22,19 +22,12 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>EUR</td>
-          <td>5.0123</td>
-          <td>7.5678</td>
-        </tr>
-        <tr>
-          <td>USD</td>
-          <td>3.1134</td>
-          <td>5.6521</td>
+        <tr *ngFor="let item of exchangeRates.rates | keyvalue">
+          <td>{{item.key}}</td>
+          <td>{{(item.value - (item.value * 5 / 100)) | number : '1.4-4'}}</td>
+          <td>{{(item.value + (item.value * 5 / 100)) | number : '1.4-4'}}</td>
         </tr>
       </tbody>
     </table>
   </div>
 </div>
-<div>{{exchangeRates.base}}</div>
-<div>{{exchangeRates.date}}</div>
