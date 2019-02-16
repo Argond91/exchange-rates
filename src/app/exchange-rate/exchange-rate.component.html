@@ -2,16 +2,15 @@
   <div id="exchange-inputs-container">
     <div class="exchange-input-element">
       <label class="exchange-label">Base:</label>
-      <select id="base-currency">
-        <option>First</option>
-        <option>Second</option>
+      <select id="base-currency" (change)="selectBaseCurrency($event.target.value)">
+        <option *ngFor="let currency of availableBaseCurrencies" value={{currency}}>{{currency}}</option>
       </select>
     </div>
     <div class="exchange-input-element">
       <label class="exchange-label">Date:</label>
       <input type="date" id="exchange-date">
     </div>
-    <button id="display-exchange-rates">Display</button>
+    <button id="display-exchange-rates" (click)="getExchangeRates()">Display</button>
 </div>
   <div id="exchange-rates-table">
     <table>
