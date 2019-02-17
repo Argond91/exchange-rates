@@ -13,13 +13,13 @@ export class ExchangeRateComponent implements OnInit {
     date: '',
     rates: []
   };
-  availableBaseCurrencies: string[] = ["EUR", "USD", "GBP", "AUD", "CAD", "JPY"];
+  availableBaseCurrencies: string[] = ['EUR', 'USD', 'GBP', 'AUD', 'CAD', 'JPY'];
   baseCurrency: string = this.availableBaseCurrencies[0];
-  exchangeDate: string = "2019-02-16";
-  yesterdayTimeStamp: number = new Date().setDate(new Date().getDate()-1);
+  exchangeDate = '2019-02-16';
+  yesterdayTimeStamp: number = new Date().setDate(new Date().getDate() - 1);
   yesterdayString: string = new Date(this.yesterdayTimeStamp).toISOString().split('T')[0];
-  sortAscending: boolean = true;
-  errorMessage: string = "";
+  sortAscending = true;
+  errorMessage = '';
 
   constructor(private externalService: ExternalService, private cdRef: ChangeDetectorRef) { }
 
@@ -31,29 +31,27 @@ export class ExchangeRateComponent implements OnInit {
     this.externalService.getExchangeRates(this.baseCurrency, this.exchangeDate)
     .subscribe(exchangeRatesResponse => {
       delete exchangeRatesResponse.rates[this.baseCurrency];
-      let exchangeRate: ExchangeRates = {
+      const exchangeRate: ExchangeRates = {
         base: exchangeRatesResponse.base,
         date: exchangeRatesResponse.date,
         rates: Object.entries(exchangeRatesResponse.rates)
-      }
+      };
       this.exchangeRates = exchangeRate;
       this.sortTable(true);
-      this.errorMessage = "";
+      this.errorMessage = '';
     },
     errorResponse => this.errorMessage = errorResponse.error.error);
   }
 
   sortTable(newExchangeRates: boolean) {
-    if(newExchangeRates || this.sortAscending){
+    if (newExchangeRates || this.sortAscending) {
       this.exchangeRates.rates.sort();
-    }
-    else {
+    } else {
       this.exchangeRates.rates.sort().reverse();
     }
-    if(newExchangeRates){
+    if (newExchangeRates) {
       this.sortAscending = false;
-    }
-    else{
+    } else {
       this.sortAscending = !this.sortAscending;
     }
   }

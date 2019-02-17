@@ -13,7 +13,7 @@ export class ExternalService {
   constructor(private http: HttpClient ) { }
 
   getExchangeRates(baseCurrency: string, date: string): Observable<ExchangeRatesResponse> {
-    let url: string = `${this.baseUrl}${date}?base=${baseCurrency}`;
+    const url = `${this.baseUrl}${date}?base=${baseCurrency}`;
     return this.http.get<ExchangeRatesResponse>(url);
   }
 }
