@@ -68,3 +68,13 @@ tr:nth-child(even) {
 .red-color{
     color: red;
 }
+
+.sortableHeader{
+    cursor: pointer;
+}
+
+.sortableHeaderIcon{
+    height: 10px;
+    width: 10px;
+    margin-left: 35px;
+}

@@ -18,17 +18,17 @@
     <table>
       <thead>
         <tr>
-          <th>Currency</th>
+          <th (click)="sortTable(false)" class="sortableHeader">Currency<img src="../../assets/sortIcon.png" class="sortableHeaderIcon"></th>
           <th>Buy</th>
           <th>Sell</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let item of exchangeRates.rates | keyvalue"
-          [ngClass]="{'red-color' : availableBaseCurrencies.indexOf(item.key) !== -1}">
-          <td>{{item.key}}</td>
-          <td>{{(item.value - (item.value * 5 / 100)) | number : '1.4-4'}}</td>
-          <td>{{(item.value + (item.value * 5 / 100)) | number : '1.4-4'}}</td>
+        <tr *ngFor="let item of exchangeRates.rates"
+          [ngClass]="{'red-color' : availableBaseCurrencies.indexOf(item[0]) !== -1}">
+          <td>{{item[0]}}</td>
+          <td>{{(item[1] - (item[1] * 5 / 100)) | number : '1.4-4'}}</td>
+          <td>{{(item[1] + (item[1] * 5 / 100)) | number : '1.4-4'}}</td>
         </tr>
       </tbody>
     </table>

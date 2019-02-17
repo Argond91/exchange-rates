@@ -14,13 +14,13 @@ describe('ExchangeRateComponent', () => {
   beforeEach(async(() => {
     const externalService = jasmine.createSpyObj('ExternalService', ['getExchangeRates']);
     getExchangeRatesSpy = externalService.getExchangeRates.and.callFake((baseCurrency) => {
-      let returnValue: ExchangeRates = {
+      let returnValue = {
         base: baseCurrency,
         date: "2019-02-15",
-        rates: new Map([
-          ["AUD", 1.5836],
-          ["USD", 1.126]
-        ])
+        rates: {
+          "AUD": 1.5836,
+          "USD": 1.126
+          }
       } 
       return of(returnValue);
     } );

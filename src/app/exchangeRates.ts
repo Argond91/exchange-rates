@@ -1,5 +1,11 @@
 export class ExchangeRates {
     base: string;
     date: string;
-    rates: Map<string, number>
+    rates: Array<any>;
+  }
+
+  export class ExchangeRatesResponse {
+    base: string;
+    date: string;
+    rates: Object;
   }
