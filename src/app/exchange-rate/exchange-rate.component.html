@@ -22,7 +22,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let item of exchangeRates.rates | keyvalue">
+        <tr *ngFor="let item of exchangeRates.rates | keyvalue" [ngClass]="{'red-color' : availableBaseCurrencies.indexOf(item.key) !== -1}">
           <td>{{item.key}}</td>
           <td>{{(item.value - (item.value * 5 / 100)) | number : '1.4-4'}}</td>
           <td>{{(item.value + (item.value * 5 / 100)) | number : '1.4-4'}}</td>
