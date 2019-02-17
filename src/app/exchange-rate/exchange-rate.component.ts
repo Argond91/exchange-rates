@@ -19,6 +19,7 @@ export class ExchangeRateComponent implements OnInit {
   yesterdayTimeStamp: number = new Date().setDate(new Date().getDate()-1);
   yesterdayString: string = new Date(this.yesterdayTimeStamp).toISOString().split('T')[0];
   sortAscending: boolean = true;
+  errorMessage: string = "";
 
   constructor(private externalService: ExternalService, private cdRef: ChangeDetectorRef) { }
 
@@ -27,7 +28,7 @@ export class ExchangeRateComponent implements OnInit {
   }
 
   getExchangeRates(): void {
-    this.externalService.getExchangeRates(this.baseCurrency)
+    this.externalService.getExchangeRates(this.baseCurrency, this.exchangeDate)
     .subscribe(exchangeRatesResponse => {
       delete exchangeRatesResponse.rates[this.baseCurrency];
       let exchangeRate: ExchangeRates = {
@@ -37,7 +38,9 @@ export class ExchangeRateComponent implements OnInit {
       }
       this.exchangeRates = exchangeRate;
       this.sortTable(true);
-    });
+      this.errorMessage = "";
+    },
+    errorResponse => this.errorMessage = errorResponse.error.error);
   }
 
   sortTable(newExchangeRates: boolean) {

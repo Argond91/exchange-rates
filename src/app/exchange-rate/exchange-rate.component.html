@@ -1,3 +1,4 @@
+<div id="errorMessage" *ngIf="errorMessage">{{errorMessage}}</div>
 <div id="exchange-rate-container">
   <div id="exchange-inputs-container">
     <form (ngSubmit)="getExchangeRates()" #exchangeForm="ngForm">
@@ -9,7 +10,7 @@
       </div>
       <div class="exchange-input-element">
         <label class="exchange-label">Date:</label>
-        <input type="date" id="exchange-date" [(ngModel)]="exchangeDate" name="exchangeDate" min="1970-01-01" max={{yesterdayString}}>
+        <input type="date" id="exchange-date" [(ngModel)]="exchangeDate" name="exchangeDate" min="1999-01-04" max={{yesterdayString}}>
       </div>
       <button type="submit" id="display-exchange-rates">Display</button>
     </form>

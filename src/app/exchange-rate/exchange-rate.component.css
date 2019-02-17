@@ -78,3 +78,9 @@ tr:nth-child(even) {
     width: 10px;
     margin-left: 35px;
 }
+
+#errorMessage{
+    color: red;
+    text-align: center;
+    margin-bottom: 30px
+}

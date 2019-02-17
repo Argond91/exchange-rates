@@ -8,12 +8,12 @@ import { ExchangeRatesResponse } from '../exchangeRates';
 })
 export class ExternalService {
 
-  private baseUrl = 'https://api.exchangeratesapi.io/latest';
+  private baseUrl = 'https://api.exchangeratesapi.io/';
 
   constructor(private http: HttpClient ) { }
 
-  getExchangeRates(baseCurrency: string): Observable<ExchangeRatesResponse> {
-    let url: string = `${this.baseUrl}?base=${baseCurrency}`;
+  getExchangeRates(baseCurrency: string, date: string): Observable<ExchangeRatesResponse> {
+    let url: string = `${this.baseUrl}${date}?base=${baseCurrency}`;
     return this.http.get<ExchangeRatesResponse>(url);
   }
 }

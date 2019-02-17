@@ -16,35 +16,35 @@ describe('ExternalServiceService', () => {
    }));
 
   it('should get exchangeRates', inject([HttpTestingController, ExternalService], (httpMock: HttpTestingController, externalService: ExternalService) => {
-        const mockExchangeRate = {
+        const mockExchangeRateResponse = {
           base: "EUR",
           date: "2019-02-15",
-          rates: new Map([
-            ["AUD", 1.5836],
-            ["USD", 1.126]
-          ])
-        }
-        externalService.getExchangeRates("EUR").subscribe(response => {
-          expect(response).toEqual(mockExchangeRate);
+          rates: {
+            "AUD": 1.5836,
+            "USD": 1.126
+            }
+        };
+        externalService.getExchangeRates("EUR", "2019-02-15").subscribe(response => {
+          expect(response).toEqual(mockExchangeRateResponse);
         })
-        const mockReq = httpMock.expectOne('https://api.exchangeratesapi.io/latest?base=EUR');
+        const mockReq = httpMock.expectOne('https://api.exchangeratesapi.io/2019-02-15?base=EUR');
 
         expect(mockReq.cancelled).toBeFalsy();
         expect(mockReq.request.method).toEqual("GET");
-        mockReq.flush(mockExchangeRate);
+        mockReq.flush(mockExchangeRateResponse);
       }
     )
   );
 
   it('should get 404 error', inject([HttpTestingController, ExternalService], (httpMock: HttpTestingController, externalService: ExternalService) => {
 
-    externalService.getExchangeRates("EUR").subscribe(response => 
+    externalService.getExchangeRates("EUR", "2019-02-15").subscribe(response => 
       fail('should have failed with the 404 error'),
       (error: HttpErrorResponse) => {
         expect(error.status).toEqual(404);
         expect(error.statusText).toEqual("Not found");
     })
-    const mockReq = httpMock.expectOne('https://api.exchangeratesapi.io/latest?base=EUR');
+    const mockReq = httpMock.expectOne('https://api.exchangeratesapi.io/2019-02-15?base=EUR');
 
     expect(mockReq.cancelled).toBeFalsy();
     expect(mockReq.request.method).toEqual("GET");
