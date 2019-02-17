@@ -1,6 +1,7 @@
 #exchange-rate-container{
     display:flex;
     flex-direction: row;
+    flex-wrap: wrap;
     justify-content: center;
     align-content: space-between;
 }
@@ -31,6 +32,7 @@
 
 #display-exchange-rates{
     margin-left: 45px;
+    margin-bottom: 40px;
     box-shadow: 2px 2px black;
 }
 
