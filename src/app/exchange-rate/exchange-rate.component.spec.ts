@@ -2,8 +2,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ExchangeRateComponent } from './exchange-rate.component';
 import { ExternalService } from '../services/external-service.service';
-import { Observable, of } from 'rxjs';
+import { of } from 'rxjs';
 import { ExchangeRates } from '../exchangeRates';
+import { FormsModule }   from '@angular/forms';
 
 describe('ExchangeRateComponent', () => {
   let component: ExchangeRateComponent;
@@ -26,6 +27,7 @@ describe('ExchangeRateComponent', () => {
 
     TestBed.configureTestingModule({
       declarations: [ ExchangeRateComponent ],
+      imports: [FormsModule],
       providers:    [ {provide: ExternalService, useValue: externalService } ]
     })
     .compileComponents();
@@ -43,7 +45,7 @@ describe('ExchangeRateComponent', () => {
 
   it('should initialize', () => {
     expect(component.availableBaseCurrencies).toEqual(["EUR", "USD", "GBP", "AUD", "CAD", "JPY"]);
-    expect(component.selectedBaseCurrency).toEqual("EUR");
+    expect(component.baseCurrency).toEqual("EUR");
     expect(getExchangeRatesSpy.calls.count()).toEqual(1);
   });
 
@@ -51,7 +53,7 @@ describe('ExchangeRateComponent', () => {
     expect(component.exchangeRates.base).toEqual("EUR");
     expect(getExchangeRatesSpy.calls.count()).toEqual(1);
 
-    component.selectedBaseCurrency = "USD";
+    component.baseCurrency = "USD";
     component.getExchangeRates();
     expect(component.exchangeRates.base).toEqual("USD");
     expect(getExchangeRatesSpy.calls.count()).toEqual(2);

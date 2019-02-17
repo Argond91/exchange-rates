@@ -1,17 +1,19 @@
 <div id="exchange-rate-container">
   <div id="exchange-inputs-container">
-    <div class="exchange-input-element">
-      <label class="exchange-label">Base:</label>
-      <select id="base-currency" (change)="selectBaseCurrency($event.target.value)">
-        <option *ngFor="let currency of availableBaseCurrencies" value={{currency}}>{{currency}}</option>
-      </select>
-    </div>
-    <div class="exchange-input-element">
-      <label class="exchange-label">Date:</label>
-      <input type="date" id="exchange-date">
-    </div>
-    <button id="display-exchange-rates" (click)="getExchangeRates()">Display</button>
-</div>
+    <form (ngSubmit)="getExchangeRates()" #exchangeForm="ngForm">
+      <div class="exchange-input-element">
+        <label class="exchange-label">Base:</label>
+        <select id="base-currency" [(ngModel)]="baseCurrency" name="baseCurrency">
+          <option *ngFor="let currency of availableBaseCurrencies" [value]="currency">{{currency}}</option>
+        </select>
+      </div>
+      <div class="exchange-input-element">
+        <label class="exchange-label">Date:</label>
+        <input type="date" id="exchange-date" [(ngModel)]="exchangeDate" name="exchangeDate" min="1970-01-01" max={{yesterdayString}}>
+      </div>
+      <button type="submit" id="display-exchange-rates">Display</button>
+    </form>
+  </div>
   <div id="exchange-rates-table">
     <table>
       <thead>
@@ -22,7 +24,8 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let item of exchangeRates.rates | keyvalue" [ngClass]="{'red-color' : availableBaseCurrencies.indexOf(item.key) !== -1}">
+        <tr *ngFor="let item of exchangeRates.rates | keyvalue"
+          [ngClass]="{'red-color' : availableBaseCurrencies.indexOf(item.key) !== -1}">
           <td>{{item.key}}</td>
           <td>{{(item.value - (item.value * 5 / 100)) | number : '1.4-4'}}</td>
           <td>{{(item.value + (item.value * 5 / 100)) | number : '1.4-4'}}</td>

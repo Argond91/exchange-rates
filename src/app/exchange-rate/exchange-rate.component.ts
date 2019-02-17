@@ -14,7 +14,10 @@ export class ExchangeRateComponent implements OnInit {
     rates: new Map<string,number>()
   };
   availableBaseCurrencies: string[] = ["EUR", "USD", "GBP", "AUD", "CAD", "JPY"];
-  selectedBaseCurrency: string = this.availableBaseCurrencies[0];
+  baseCurrency: string = this.availableBaseCurrencies[0];
+  exchangeDate: string = "2019-02-16";
+  yesterdayTimeStamp: number = new Date().setDate(new Date().getDate()-1);
+  yesterdayString: string = new Date(this.yesterdayTimeStamp).toISOString().split('T')[0];
 
   constructor(private externalService: ExternalService) { }
 
@@ -23,12 +26,11 @@ export class ExchangeRateComponent implements OnInit {
   }
 
   getExchangeRates(): void {
-    this.externalService.getExchangeRates(this.selectedBaseCurrency)
-    .subscribe(exchangeRates => this.exchangeRates = exchangeRates);
-  }
-
-  selectBaseCurrency(baseCurrency: string){
-    this.selectedBaseCurrency = baseCurrency;
+    this.externalService.getExchangeRates(this.baseCurrency)
+    .subscribe(exchangeRates => {
+      delete exchangeRates.rates[this.baseCurrency];
+      return this.exchangeRates = exchangeRates
+    });
   }
 
 }
